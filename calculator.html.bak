@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Javascript Calculator</title>
+        <style>
+            .container {
+                width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px solid blue;
+                border-radius: 1%;
+                background-color: black; /* this is the colour of your calculator's casing */
+            }
+        
+        .display {
+            width: 98%;
+            height: 40px;
+            font-size: 30px;
+            text-align: right;
+            margin-bottom: 15px;
+            padding-right: 5px;
+        }
+        
+        table {
+            width: 100%;
+            padding: 5px;
+        }
+        
+        table td {
+            width: 20%;
+            margin: 3px;
+            text-align: center;
+        }
+        
+        .button {
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            color: #222;
+        }
+       </style>
+    <script type="text/javascript">
+    /* CODE SECTION */
+		var expr = "";
+        
+        /* To be completed by you */
+        function equation () {
+			var evt = event || window.event; 
+			var c1 = evt.srcElement.value;
+
+            var s = expr;
+			if(s.length > 0) {
+				var c2 = s.charAt(s.length - 1);			
+				var f1 = ((c1 >= '0') && (c1 <= '9')) || (c1 == '.');
+				var f2 = ((c2 >= '0') && (c2 <= '9')) || (c2 == '.');
+				if((f1 && !f2) || (!f1 && f2)) s  = s + " ";
+			}
+			s = s + c1;
+			expr = s;
+			document.getElementById ('display').value = expr;
+        }
+        
+        /* To be completed by you */
+        function clearDisplay () {
+			expr = "";
+			document.getElementById ('display').value = "0";
+        }
+        
+        /* To be completed by you */
+        function solve () {
+			if(expr == "") return;
+			document.getElementById ('display').value = eval(expr);
+			expr = "";
+        }
+        
+        /* To be completed by you */
+        function backspace () {
+			var s = expr;
+			var p = s.length;
+			while(p >= 0) {
+				var c = s.charAt(p);
+				if(c != " ") {
+					s = s.substring(0, p - 1);
+					break;
+				}
+				p--;
+			}
+			if(s.charAt(s.length - 1) == " ") s = s.substring(0, s.length - 1);
+			if(s == "") {
+				s = "0";
+				expr = "";
+			}
+			else expr = s;
+			document.getElementById ('display').value = s;
+        }
+        
+        /* This func1 () here is the same as the func1() in the button section, the button, when pressed, calls this function to perform the code within it */
+        function func1 () {
+            solve (); /* This function calls the funnction solve () above */
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+            document.getElementById ('display').value = Math.sin (equation);
+			expr = "";
+        }
+        
+        /* To be completed by you */
+        function func2 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+            document.getElementById ('display').value = Math.cos (equation);
+			expr = "";
+        }
+    
+        /* To be completed by you */
+        function func3 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+            document.getElementById ('display').value = Math.tan (equation);
+			expr = "";
+        }
+    
+        /* To be completed by you */
+        function func4 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+            document.getElementById ('display').value = Math.sqrt (equation);
+			expr = "";
+        }
+    
+        /* To be completed by you */
+        function func5 () {
+            solve ();
+            var equation = document.getElementById ('display').value;		
+			if(equation == "") return;
+            document.getElementById ('display').value = equation * equation;
+			expr = "";
+        }
+    
+        /* To be completed by you */
+        function func6 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+            document.getElementById ('display').value = 3.14159265358979;
+			expr = "";
+        }
+    
+        /* To be completed by you */
+        function func7 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+			
+			var n = parseInt(equation);
+			var r = 1;
+			for(i = 1; i <= n; i++) r = r * i;
+            document.getElementById ('display').value = r;
+			expr = "";
+        }
+        /* To be completed by you */
+        function func8 () {
+            solve ();
+            var equation = document.getElementById ('display').value;
+			if(equation == "") return;
+			
+			var r = 1;
+			for(i = 0; i < 10; i++) r = r * equation;
+            document.getElementById ('display').value = r;
+			expr = "";
+        }
+    
+        /* ANY CODE FOR FUNCTIONS SHOULD BE PLACED ABOVE HERE */
+        /* END OF CODE SECTION */
+    </script>
+<!-- BUTTON SECTION -->
+</head>
+<body onload="init ()">
+    <div class="container">
+        <table cellspacing="0">
+            <!-- THIS SECTION IS FOR STYLING YOUR CALCULATOR -->
+            <!-- YOU SHOULD REALLY ONLY NEED TO CHANGE THE 'value=""' PART OF THE CODE -->
+            <!-- FOR EXAMPLE 'value="sin"' FOR THE BUTTON AND FUNCTION THAT WILL BE USED FOR SIN -->
+            <tr>
+                <td colspan="4"><input id="display" class="display" type="input" disabled="disabled" value="0"/></td>
+            </tr>
+            <tr>
+                <!-- THE LINE BELOW IS AN EXAMPLE OF SETTING A BUTTON TO DISPLAY 'SIN' AND function func1 () above solves for sin -->
+                <td><input id="sin" class="button" type="button" value="sin" onclick="func1 ()"/></td>
+                
+                <td><input id="cos" class="button" type="button" value="cos" onclick="func2 ()"/></td>
+                <td><input id="tan" class="button" type="button" value="tan" onclick="func3 ()"/></td>
+                <td><input id="sqrt" class="button" type="button" value="√" onclick="func4 ()"/></td>
+            </tr>
+            <tr>
+                <td><input id="squared" class="button" type="button" value="x2" onclick="func5 ()"/></td>
+                <td><input id="pi" class="button" type="button" value="π" onclick="func6 ()"/></td>
+                <td><input id="factorial" class="button" type="button" value="n!" onclick="func7 ()"/></td>
+                <td><input id="exp" class="button" type="button" value="X10" onclick="func8 ()"/></td>
+                
+            </tr>
+            <tr>
+                <td><input id="backspace" class="button" type="button" value="←" onclick="backspace ()"/></td>
+                <td><input id="openbacket" class="button" type="button" value="(" onclick="equation ()"/></td>
+                <td><input id="closebracket" class="button" type="button" value=")" onclick="equation ()"/></td>
+                <td><input id="divide" class="button" type="button" value="/" onclick="equation ()"/></td>
+            </tr>
+            <tr>
+                <td><input id="one" class="button" type="button" value="1" onclick="equation ()"/></td>
+                <td><input id="two" class="button" type="button" value="2" onclick="equation ()"/></td>
+                <td><input id="three" class="button" type="button" value="3" onclick="equation ()"/></td>
+                <td><input id="multiply" class="button" type="button" value="*" onclick="equation ()"/></td>
+            </tr>
+            <tr>
+                <td><input id="four" class="button" type="button" value="4" onclick="equation ()"/></td>
+                <td><input id="five" class="button" type="button" value="5" onclick="equation ()"/></td>
+                <td><input id="six" class="button" type="button" value="6" onclick="equation ()"/></td>
+                <td><input id="minus" class="button" type="button" value="-" onclick="equation ()"/></td>
+            </tr>
+            <tr>
+                <td><input id="seven" class="button" type="button" value="7" onclick="equation ()"/></td>
+                <td><input id="eight" class="button" type="button" value="8" onclick="equation ()"/></td>
+                <td><input id="nine" class="button" type="button" value="9" onclick="equation ()"/></td>
+                <td><input id="plus" class="button" type="button" value="+" onclick="equation ()"/></td>
+            </tr>
+            <tr>
+                <td><input id="decimal" class="button" type="button" value="." onclick="equation (this.value, 'decimal')"/></td>
+                <td> <input id="zero" class="button" type="button" value="0" onclick="equation ()"/></td>
+                <td> <input id="clearDisplay" class="button" type="button" value="C" onclick="clearDisplay ()"/></td>
+                <td><input id="equals" class="button" type="button" value="=" onclick="solve ()"/></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
